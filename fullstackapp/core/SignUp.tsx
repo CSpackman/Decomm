@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { ethers } from 'ethers'
 import { ExternalProvider } from "@ethersproject/providers";
 import { Stepper, Button, Group, TextInput, Select } from '@mantine/core';
@@ -37,16 +37,18 @@ export default function SignUp() {
 
     // Reset the connection
     const disconnect = () => {
-    console.log("Disconnecting...")
-    setCurrentAccount('')
+        console.log("Disconnecting...")
+        setCurrentAccount('')
     }
 
     // Check if address is verified
-    useEffect(() => {
-        if (ethers.utils.isAddress(currentAccount)) {
-            nextStep();
-        } else {
-            alert("Please connect with a valid Ethereum address.")
+    useMemo(() => {
+        if (currentAccount != '') {
+            if (ethers.utils.isAddress(currentAccount)) {
+                nextStep();
+            } else {
+                alert("Please connect with a valid Ethereum address.")
+            }
         }
     }, [currentAccount]);
 

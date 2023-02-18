@@ -15,10 +15,10 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
     const [opened, setOpened] = useState(false);
 
     // @todo: Request from API with metamask ID to see if user needs to sign up
-    const [hasAccount, setHasAccount] = useState(false);
+    const [hasAccount, setHasAccount] = useState(true);
 
   return (
-    <div className='ml-auto bg-white w-96 p-4 border-slate-400 border-4 rounded-lg'>
+    <div className='ml-auto bg-white w-96 p-4 border-slate-400 border-4 rounded-lg z-10'>
         <div className='flex align-top items-center'>
             <BsFillCheckCircleFill className='text-green-500' size={20} />
             <p className='text-lg font-bold px-3'>Current Bag</p>

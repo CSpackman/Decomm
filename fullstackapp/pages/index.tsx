@@ -34,7 +34,12 @@ export default function App() {
         <Navbar items={1} setBagOpened={setBagOpened} bagOpened={bagOpened} />
         { bagOpened ? 
           // @todo: Add API call
-          <NikeBag NikeItems={sampleProps} setBagOpened={setBagOpened} bagOpened={bagOpened} /> : null }
+          <NikeBag NikeItems={sampleProps} setBagOpened={setBagOpened} bagOpened={bagOpened} /> : null 
+        }
+        <div className={'flex items-center justify-center align-middle -z-10'}>
+          <NikeItem />
+          <NikeItem />
+        </div>
       </div>
     </main>
   )
