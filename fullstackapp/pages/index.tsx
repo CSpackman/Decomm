@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useMutation, useQuery } from '../convex/_generated/react'
 import Item from '../components/Item'
+import Summary from '../components/Summary'
 
 export default function App() {
   const messages = useQuery('listMessages') || []
@@ -22,7 +23,7 @@ export default function App() {
   return (
     <main>
       <div className='bg-slate-400 h-screen'>
-        <Item />
+        <Summary />
       </div>
     </main>
   )

@@ -19,7 +19,7 @@ export default function Item() {
             <p className='text-md text-gray-500'>Mens Shoes</p>
             <p className='text-md'>Size: 13</p>
         </div>
-        <div className='bg-black text-white flex items-center align-middle justify-center py-2 mt-4 rounded-md'>
+        <div className='bg-black text-white flex items-center bottom-px align-middle justify-center py-2 mt-4 rounded-md'>
             <button onClick={() => alert("Button Pressed")}>Add to Bag</button>
         </div>
     </div>
