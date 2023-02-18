@@ -6,12 +6,12 @@ import NikeBag from '../components/NikeBag'
 import { NikeBagItemProps } from '../components/NikeBagItem'
 
 export default function App() {
-  const users = useQuery('listUsers') || []
+  // const users = useQuery('listUsers') || []
 
   const [newMessageText, setNewMessageText] = useState('')
   const initUser = useMutation('user:initUser')
 
-  function setCookie(wallet, firstName, lastName, shippingAddress, history, email) {
+  function setCookie(wallet: string, firstName: string, lastName: string, shippingAddress: string, history: string, email: string) {
     document.cookie = "wallet=" + wallet;
 
     if (firstName) {
@@ -33,7 +33,7 @@ export default function App() {
     console.log("document.cookie = " + document.cookie);
 }
   
-  function getCookie(cname) {
+  function getCookie(cname: string) {
     let name = cname + "=";
     let ca = document.cookie.split(';');
     for(let i = 0; i < ca.length; i++) {
@@ -48,8 +48,8 @@ export default function App() {
     return "";
   }
   
-  function checkCookie(user) {
-    let user = getCookie(user.wallet);
+  function checkCookie(user: any) {
+    let User = getCookie(user.wallet);
     if (user != "") {
       alert("Welcome again " + user.firstName + " " + user.lastName);
     } else {
