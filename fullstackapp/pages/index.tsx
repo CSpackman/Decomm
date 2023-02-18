@@ -1,6 +1,8 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useMutation, useQuery } from '../convex/_generated/react'
-import Item from '../components/Item'
+import NikeItem from '../components/NikeItem'
+import Navbar from '../components/Navbar'
+import NikeBag from '../components/NikeBag'
 
 export default function App() {
   const messages = useQuery('listMessages') || []
@@ -19,10 +21,16 @@ export default function App() {
     setNewMessageText('')
     await sendMessage(newMessageText, name)
   }
+
+  // Frontend State Management
+  const [bagOpened, setBagOpened] = useState(false)
+
+
   return (
     <main>
       <div className='bg-slate-400 h-screen'>
-        <Item />
+        <Navbar items={1} setBagOpened={setBagOpened} bagOpened={bagOpened} />
+        { bagOpened ? <NikeBag /> : null }
       </div>
     </main>
   )

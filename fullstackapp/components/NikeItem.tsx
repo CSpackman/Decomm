@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-export default function Item() {
+export default function NikeItem() {
   return (
     <div className='bg-white rounded-md w-60 flex flex-col align-middle p-4'>
         <div>
@@ -18,9 +18,10 @@ export default function Item() {
             <p className='font-bold text-lg'>Nike Dunk Low Pandas</p>
             <p className='text-md text-gray-500'>Mens Shoes</p>
             <p className='text-md'>Size: 13</p>
+            <p className='font-bold mt-1'>0.09 ETH</p>
         </div>
         <div className='bg-black text-white flex items-center align-middle justify-center py-2 mt-4 rounded-md'>
-            <button onClick={() => alert("Button Pressed")}>Add to Bag</button>
+            <button onClick={() => alert("Added to Bag")}>Add to Bag</button>
         </div>
     </div>
   )
