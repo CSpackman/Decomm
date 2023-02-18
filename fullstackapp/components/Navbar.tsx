@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BsBag } from 'react-icons/bs'
+import { Indicator } from '@mantine/core';
 
 const navElement = 'text-gray-500 hover:text-black px-2'
 
@@ -32,7 +33,9 @@ export default function Navbar({ items, bagOpened, setBagOpened }: NavbarProps) 
             className='mr-5'
             onClick={() => setBagOpened(!bagOpened)}
         >
-            <BsBag className='' size={20} />
+            <Indicator label={items} inline size={18} color='black'>
+                <BsBag className='' size={20} />
+            </Indicator>
         </div>
         </div>
     </div>

@@ -30,9 +30,10 @@ export default function App() {
   return (
     <main>
       <div className='bg-slate-400 h-screen'>
+        {/* @todo: Add API call */}
         <Navbar items={1} setBagOpened={setBagOpened} bagOpened={bagOpened} />
         { bagOpened ? 
-          // @todo: 
+          // @todo: Add API call
           <NikeBag NikeItems={sampleProps} setBagOpened={setBagOpened} bagOpened={bagOpened} /> : null }
       </div>
     </main>

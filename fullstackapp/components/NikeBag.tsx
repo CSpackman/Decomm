@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
 import NikeBagItem, { NikeBagItemProps } from './NikeBagItem';
-import { Modal, Button, Group } from '@mantine/core';
-import { ethers } from 'ethers'
-import { ExternalProvider } from "@ethersproject/providers";
-
-declare global {
-  interface Window {
-    ethereum?: ExternalProvider;
-  }
-}
+import { Popover, Modal, Button } from '@mantine/core';
+import SignUp from '../core/SignUp';
+import OneClick from '../core/OneClick';
 
 type NikeBagProps = {
     NikeItems: NikeBagItemProps[];
@@ -19,45 +13,12 @@ type NikeBagProps = {
 
 export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagProps) {
     const [opened, setOpened] = useState(false);
-    const [currentAccount, setCurrentAccount] = useState('');
 
-    useEffect(() => {
-        console.log('currentAccount: ', currentAccount)
-    }, [])
-
-    const connectWallet = () => {
-        //client side code
-        if(!window.ethereum) {
-          console.log("please install MetaMask")
-          return
-        }
-        /*
-        //change from window.ethereum.enable() which is deprecated
-        //see docs: https://docs.metamask.io/guide/ethereum-provider.html#legacy-methods
-        window.ethereum.request({ method: 'eth_requestAccounts' })
-        .then((accounts:any)=>{
-          if(accounts.length>0) setCurrentAccount(accounts[0])
-        })
-        .catch('error',console.error)
-        */
-    
-        //we can do it using ethers.js
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-    
-        // MetaMask requires requesting permission to connect users accounts
-        provider.send("eth_requestAccounts", [])
-        .then((accounts)=>{
-          if(accounts.length>0) setCurrentAccount(accounts[0])
-        })
-        .catch((e)=>console.log(e))
-    }
-    const disconnect = () => {
-    console.log("Disconnecting...")
-    setCurrentAccount('')
-    }
+    // @todo: Request from API with metamask ID to see if user needs to sign up
+    const [hasAccount, setHasAccount] = useState(false);
 
   return (
-    <div className='ml-auto bg-white w-96 p-4'>
+    <div className='ml-auto bg-white w-96 p-4 border-slate-400 border-4 rounded-lg'>
         <div className='flex align-top items-center'>
             <BsFillCheckCircleFill className='text-green-500' size={20} />
             <p className='text-lg font-bold px-3'>Current Bag</p>
@@ -79,6 +40,7 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
             <button
                 onClick={() => {
                     setOpened(true)
+                    // setBagOpened(false)
                 }}
             >
                 Checkout
@@ -91,12 +53,9 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
                 withCloseButton={false}
                 size='60%'
             >
-                {
-                    currentAccount === '' ? <button onClick={() => connectWallet()}>Connect Wallet</button> : <p>{currentAccount}</p>
-                }
+                { hasAccount ? <OneClick /> : <SignUp /> }
             </Modal>
         </div>
-        <button onClick={() => disconnect()}>Disconnect</button>
     </div>
   )
 }
