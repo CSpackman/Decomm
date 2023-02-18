@@ -1,7 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { ethers } from 'ethers'
 import { ExternalProvider } from "@ethersproject/providers";
 import { Stepper, Button, Group, TextInput, Select } from '@mantine/core';
+import initUser from '../convex/user';
+import { useQuery } from "../convex/_generated/react";
+import { useMutation } from "../convex/_generated/react";
 
 declare global {
   interface Window {
@@ -16,7 +19,31 @@ export default function SignUp() {
     const [active, setActive] = useState(1);
     const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({} as user);
+    //wallet: string, firstName?: string, lastName?: string, shippingAddress?: string, email?: string, history?: Array<string>
+    type user = {
+        first_name:string,
+        last_name: string,
+        email: string,
+        streetAdress: string,
+        stateProvince: string,
+        country: string,
+        zipCode: string,
+        phone: string
+
+    }
+    function submitData(){
+        if(!window.ethereum) {
+            console.log("please install MetaMask")
+            return
+          }
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        provider.send("eth_requestAccounts", [])
+        .then((accounts)=>{
+          if(accounts.length>0) setCurrentAccount(accounts[0])
+          initUser(accounts[0],inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone)
+    })
+}
 
     // Connect to MetaMask
     const connectWallet = () => {
@@ -75,9 +102,15 @@ export default function SignUp() {
                             <div className='py-1'></div>
                             <TextInput 
                                 placeholder="Your name"
-                                label="Full name"
+                                label="First name"
                                 color='black'
-                                onChange={(event) => setInputs({...inputs, name: event.currentTarget.value})}
+                                onChange={(event) => setInputs({...inputs, first_name: event.currentTarget.value})}
+                            />
+                            <TextInput 
+                                placeholder="Your name"
+                                label="Last name"
+                                color='black'
+                                onChange={(event) => setInputs({...inputs, last_name: event.currentTarget.value})}
                             />
                             <TextInput 
                                 placeholder="you@decomm.eth"
@@ -99,7 +132,7 @@ export default function SignUp() {
                                     label="Country"
                                     color='black'
                                     data={countryOptions}
-                                    onChange={(value) => setInputs({...inputs, country: value})}
+                                    onChange={(value) => setInputs({...inputs, country: value as string})}
                                 />
                                 <div className='px-2'></div>
                                 <Select 
@@ -107,20 +140,20 @@ export default function SignUp() {
                                     label="State/Province"
                                     color='black'
                                     data={provinceStateOptions}
-                                    onChange={(value) => setInputs({...inputs, provinceState: value})}
+                                    onChange={(value) => setInputs({...inputs, stateProvince: value as string})}
                                 />
                             </div>
                             <TextInput 
                                 placeholder="123 Main St"
                                 label="Street Address"
                                 color='black'
-                                onChange={(event) => setInputs({...inputs, street: event.currentTarget.value})}
+                                onChange={(event) => setInputs({...inputs, streetAdress: event.currentTarget.value})}
                             />
                             <TextInput 
                                 placeholder="A4B 5C6"
                                 label="ZIP Code"
                                 color='black'
-                                onChange={(event) => setInputs({...inputs, street: event.currentTarget.value})}
+                                onChange={(event) => setInputs({...inputs, zipCode: event.currentTarget.value})}
                             />
                         </div>
                         <div className='bg-black w-full p-2 mt-4 rounded-lg flex justify-center'>
@@ -128,6 +161,7 @@ export default function SignUp() {
                                 className='text-white font-bold'
                                 onClick={() => {
                                     nextStep()
+                                    submitData()
                                 }}
                             >
                                 Continue

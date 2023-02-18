@@ -6,7 +6,7 @@ import NikeBag from '../components/NikeBag'
 import { NikeBagItemProps } from '../components/NikeBagItem'
 
 export default function App() {
-  const users = useQuery('listUsers') || []
+  // const users = useQuery('listUsers') || []
 
   const [newMessageText, setNewMessageText] = useState('')
   const initUser = useMutation('user:initUser')
@@ -48,8 +48,8 @@ export default function App() {
     return "";
   }
   
-  function checkCookie(user) {
-    let user = getCookie(user.wallet);
+  function checkCookie(user:any) {
+    let User = getCookie(user.wallet);
     if (user != "") {
       alert("Welcome again " + user.firstName + " " + user.lastName);
     } else {
@@ -59,11 +59,11 @@ export default function App() {
       }
     }
   }
-  // const [name, setName] = useState('user')
+  const [name, setName] = useState('user')
 
-  // useEffect(() => {
-  //   setName('User ' + Math.floor(Math.random() * 10000))
-  // }, [])
+  useEffect(() => {
+    setName('User ' + Math.floor(Math.random() * 10000))
+  }, [])
 
   async function handleInitUsers(event: FormEvent) {
     event.preventDefault()

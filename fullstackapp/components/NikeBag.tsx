@@ -15,7 +15,7 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
     const [opened, setOpened] = useState(false);
 
     // @todo: Request from API with metamask ID to see if user needs to sign up
-    const [hasAccount, setHasAccount] = useState(true);
+    const [hasAccount, setHasAccount] = useState(false);
 
   return (
     <div className='ml-auto bg-white w-96 p-4 border-slate-400 border-4 rounded-lg z-10'>
