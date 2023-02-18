@@ -1,5 +1,9 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useMutation, useQuery } from '../convex/_generated/react'
+import NikeItem from '../components/NikeItem'
+import Navbar from '../components/Navbar'
+import NikeBag from '../components/NikeBag'
+import { NikeBagItemProps } from '../components/NikeBagItem'
 
 export default function App() {
   const messages = useQuery('listMessages') || []
@@ -18,29 +22,37 @@ export default function App() {
     setNewMessageText('')
     await sendMessage(newMessageText, name)
   }
+
+  // Frontend State Management
+  const [bagOpened, setBagOpened] = useState(false)
+
+
   return (
     <main>
-      <h1>Convex Chat</h1>
-      <p className="badge">
-        <span>{name}</span>
-      </p>
-      <ul>
-        {messages.map((message) => (
-          <li key={message._id.toString()}>
-            <span>{message.author}:</span>
-            <span>{message.body}</span>
-            <span>{new Date(message._creationTime).toLocaleTimeString()}</span>
-          </li>
-        ))}
-      </ul>
-      <form onSubmit={handleSendMessage}>
-        <input
-          value={newMessageText}
-          onChange={(event) => setNewMessageText(event.target.value)}
-          placeholder="Write a message…"
-        />
-        <input type="submit" value="Send" disabled={!newMessageText} />
-      </form>
+      <div className='bg-slate-400 h-screen'>
+        {/* @todo: Add API call */}
+        <Navbar items={1} setBagOpened={setBagOpened} bagOpened={bagOpened} />
+        { bagOpened ? 
+          // @todo: Add API call
+          <NikeBag NikeItems={sampleProps} setBagOpened={setBagOpened} bagOpened={bagOpened} /> : null 
+        }
+        <div className={'flex items-center justify-center align-middle -z-10'}>
+          <NikeItem />
+          <NikeItem />
+        </div>
+      </div>
     </main>
   )
 }
+
+
+// @todo: Add API call
+const sampleProps: NikeBagItemProps[] = [
+  {
+    img: 'https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/8061baec-449e-433b-89b3-8234dde499bd/air-jordan-1-mid-mens-shoes-FGLltd.png',
+    itemName: 'Nike Air Max 2090',
+    itemType: 'Mens Shoe',
+    itemSize: 'Size: 13',
+    ethPrice: '0.09'
+  },
+]
