@@ -5,4 +5,6 @@ export default defineSchema({
     author: s.string(),
     body: s.string(),
   }),
-})
+}
+//, {strict: false}
+)

@@ -1,0 +1,7 @@
+{
+  "project": "fullstackapp",
+  "team": "cspackman",
+  "prodUrl": "https://grateful-manatee-122.convex.cloud",
+  "functions": "convex/",
+  "authInfo": []
+}
