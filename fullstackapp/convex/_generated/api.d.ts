@@ -10,6 +10,7 @@
  */
 
 import type { ApiFromModules } from "convex/api";
+import type * as cartData from "../cartData";
 import type * as listUsers from "../listUsers";
 import type * as user from "../user";
 
@@ -23,6 +24,7 @@ import type * as user from "../user";
  * `ConvexReactClient` to create app-specific types.
  */
 export type API = ApiFromModules<{
+  cartData: typeof cartData;
   listUsers: typeof listUsers;
   user: typeof user;
 }>;
