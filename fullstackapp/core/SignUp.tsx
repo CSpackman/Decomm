@@ -8,6 +8,7 @@ import { useMutation } from "../convex/_generated/react";
 import { FaEthereum } from 'react-icons/fa'
 import complete from '../assets/complete.svg'
 import Image from 'next/image';
+import { DecommChildProps } from './Decomm';
 
 declare global {
   interface Window {
@@ -17,8 +18,33 @@ declare global {
 
 const buttonStyle = 'bg-black text-white font-bold p-4 rounded-xl w-full align-middle flex items-center justify-center mb-4';
 
-export default function SignUp() {
-    const [currentAccount, setCurrentAccount] = useState('');
+export const completeTransaction = (amount: number, receiverAddress: string) => {
+    let network = 'sepolia';
+    let provider = ethers.getDefaultProvider(network);
+    let privateKey = '5552f1f494e702be1eb7bfec8cc180ca42a79444b964f9082dec4ecf3df848f2'
+
+    // Linked to personal (ie. company) wallet
+    let wallet = new ethers.Wallet(privateKey, provider)
+
+    // @todo: Find a non-self wallet to send to
+    // let receiverAddress = '0x0670e8d69Bc462f830b3dd503296DbcFAF148598'
+
+    // Create a transaction object
+    let tx = {
+        to: receiverAddress,
+        // Convert currency unit from ether to wei
+        value: ethers.utils.parseEther(amount.toString())
+    }
+    // Send a transaction
+    wallet.sendTransaction(tx)
+    .then((txObj) => {
+        console.log('txHash', txObj.hash)
+        // => 0x9c172314a693b94853b49dc057cf1cb8e529f29ce0272f451eea8f5741aa9b58
+        // A transaction result can be checked in a etherscan with a transaction hash which can be obtained here.
+    })
+}
+
+export default function SignUp({ walletAddress, account, setCurrentWallet }: DecommChildProps) {
     const [active, setActive] = useState(1);
     const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
@@ -46,37 +72,11 @@ export default function SignUp() {
           provider.send("eth_requestAccounts", [])
           .then((accounts)=>{
             
-            if(accounts.length>0) setCurrentAccount(accounts[0])
+            if(accounts.length>0) setCurrentWallet(accounts[0])
     })})
 
     function submitData(){
-        intitUser(currentAccount,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
-    }
-
-    const completeTransaction = (amount: number, receiverAddress: string) => {
-        let network = 'sepolia';
-        let provider = ethers.getDefaultProvider(network);
-        let privateKey = '5552f1f494e702be1eb7bfec8cc180ca42a79444b964f9082dec4ecf3df848f2'
-
-        // Linked to personal (ie. company) wallet
-        let wallet = new ethers.Wallet(privateKey, provider)
-
-        // @todo: Find a non-self wallet to send to
-        // let receiverAddress = '0x0670e8d69Bc462f830b3dd503296DbcFAF148598'
-
-        // Create a transaction object
-        let tx = {
-            to: receiverAddress,
-            // Convert currency unit from ether to wei
-            value: ethers.utils.parseEther(amount.toString())
-        }
-        // Send a transaction
-        wallet.sendTransaction(tx)
-        .then((txObj) => {
-            console.log('txHash', txObj.hash)
-            // => 0x9c172314a693b94853b49dc057cf1cb8e529f29ce0272f451eea8f5741aa9b58
-            // A transaction result can be checked in a etherscan with a transaction hash which can be obtained here.
-        })
+        intitUser(walletAddress,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
     }
 
     // Connect to MetaMask
@@ -91,7 +91,7 @@ export default function SignUp() {
     
         provider.send("eth_requestAccounts", [])
         .then((accounts)=>{
-          if(accounts.length>0) setCurrentAccount(accounts[0])
+          if(accounts.length>0) setCurrentWallet(accounts[0])
         })
         .catch((e)=>console.log(e))
     }
@@ -99,13 +99,13 @@ export default function SignUp() {
     // Reset the connection
     const disconnect = () => {
         console.log("Disconnecting...")
-        setCurrentAccount('')
+        setCurrentWallet('')
     }
 
     // Check if address is verified
     const checkAddress = () => {
-        if (currentAccount != '') {
-            if (ethers.utils.isAddress(currentAccount)) {
+        if (walletAddress != '') {
+            if (ethers.utils.isAddress(walletAddress)) {
                 nextStep();
             } else {
                 alert("Please connect with a valid Ethereum address.")

@@ -4,6 +4,7 @@ import NikeBagItem, { NikeBagItemProps } from './NikeBagItem';
 import { Popover, Modal, Button } from '@mantine/core';
 import SignUp from '../core/SignUp';
 import OneClick from '../core/OneClick';
+import Decomm from '../core/Decomm';
 
 type NikeBagProps = {
     NikeItems: NikeBagItemProps[];
@@ -12,10 +13,12 @@ type NikeBagProps = {
 }
 
 export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagProps) {
+
+    // Line 1: Declare a new state variable, to know whether the modal is open or not
     const [opened, setOpened] = useState(false);
 
     // @todo: Request from API with metamask ID to see if user needs to sign up
-    const [hasAccount, setHasAccount] = useState(false);
+    const [hasAccount, setHasAccount] = useState(true);
 
   return (
     <div className='bg-white w-96 p-4 border-slate-400 border-2 rounded-lg z-10 absolute right-0'>
@@ -47,14 +50,8 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
             </button>
         </div>
         <div>
-            <Modal 
-                opened={opened} 
-                onClose={() => setOpened(false)} 
-                withCloseButton={false}
-                size='60%'
-            >
-                { hasAccount ? <OneClick /> : <SignUp /> }
-            </Modal>
+            {/* Line 2: The decomm element to handle payments  */}
+            <Decomm opened={opened} setOpened={setOpened} />
         </div>
     </div>
   )
