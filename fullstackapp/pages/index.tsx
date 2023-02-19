@@ -4,6 +4,7 @@ import NikeItem from '../components/NikeItem'
 import Navbar from '../components/Navbar'
 import NikeBag from '../components/NikeBag'
 import { NikeBagItemProps } from '../components/NikeBagItem'
+import Footer from '../components/Footer'
 
 export default function App() {
   // const users = useQuery('listUsers') || []
@@ -77,17 +78,30 @@ export default function App() {
 
   return (
     <main>
-      <div className='bg-slate-400 h-screen'>
+      <div className='bg-white h-screen'>
         {/* @todo: Add API call */}
         <Navbar items={1} setBagOpened={setBagOpened} bagOpened={bagOpened} />
         { bagOpened ? 
           // @todo: Add API call
           <NikeBag NikeItems={sampleProps} setBagOpened={setBagOpened} bagOpened={bagOpened} /> : null 
         }
-        <div className={'flex items-center justify-center align-middle -z-10'}>
-          <NikeItem />
-          <NikeItem />
+        <div className='border-2 bg-slate-500'></div>
+        <div className='text-md w-full bg-white outline-t p-4 font-light italic px-8'>
+          Lifestyle / Shoes
         </div>
+        <div className='font-bold text-2xl bg-white px-8 pb-2'>
+          Men's Lifestyle Shoes (400+)
+        </div>
+          <div className='flex items-center justify-center align-middle -z-10'>
+            <NikeItem />
+            <NikeItem />
+            <NikeItem />
+          </div>
+          <div className='flex items-center justify-center align-middle -z-10'>
+            <NikeItem />
+            <NikeItem />
+            <NikeItem />
+          </div>
       </div>
     </main>
   )

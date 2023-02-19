@@ -12,7 +12,7 @@ type NavbarProps = {
 
 export default function Navbar({ items, bagOpened, setBagOpened }: NavbarProps) {
   return (
-    <div className='bg-white w-full p-5 flex items-center justify-center'>
+    <div className='bg-white w-full p-5 flex items-center justify-center sticky z-1'>
         <img 
             alt='Nike Logo'
             src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/1200px-Logo_NIKE.svg.png'

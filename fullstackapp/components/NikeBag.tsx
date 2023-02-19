@@ -18,7 +18,7 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
     const [hasAccount, setHasAccount] = useState(false);
 
   return (
-    <div className='ml-auto bg-white w-96 p-4 border-slate-400 border-4 rounded-lg z-10'>
+    <div className='bg-white w-96 p-4 border-slate-400 border-2 rounded-lg z-10 absolute right-0'>
         <div className='flex align-top items-center'>
             <BsFillCheckCircleFill className='text-green-500' size={20} />
             <p className='text-lg font-bold px-3'>Current Bag</p>

@@ -113,6 +113,26 @@ export default function SignUp() {
         }
     }
 
+    const populate = () => {
+        const autoPopulate = {
+            first_name: 'John',
+            last_name: 'Doe',
+            email: 'john@doe.com',
+            phone: '(123) 456-7890',
+            country: 'CAN',
+            stateProvince: 'ON',
+            streetAdress: '123 Main St',
+            zipCode: 'A4B 5C6',
+        } as user;
+        setInputs(autoPopulate);
+    }
+
+    useEffect(() => {
+        if (active == 2) {
+            populate()
+        }
+    }, [active])
+
     // Make color a prop so it's dynamic
     return (
         <div>
@@ -139,24 +159,28 @@ export default function SignUp() {
                                 placeholder="Your name"
                                 label="First name"
                                 color='black'
+                                value={inputs.first_name}
                                 onChange={(event) => setInputs({...inputs, first_name: event.currentTarget.value})}
                             />
                             <TextInput 
                                 placeholder="Your name"
                                 label="Last name"
                                 color='black'
+                                value={inputs.last_name}
                                 onChange={(event) => setInputs({...inputs, last_name: event.currentTarget.value})}
                             />
                             <TextInput 
                                 placeholder="you@decomm.eth"
                                 label="Email"
                                 color='black'
+                                value={inputs.email}
                                 onChange={(event) => setInputs({...inputs, email: event.currentTarget.value})}
                             />
                             <TextInput 
                                 placeholder="(123) 456-7890"
                                 label="Phone Number"
                                 color='black'
+                                value={inputs.phone}
                                 onChange={(event) => setInputs({...inputs, phone: event.currentTarget.value})}
                             />
                             <h1 className='font-bold mt-4'>Shipping Info</h1>
@@ -167,6 +191,7 @@ export default function SignUp() {
                                     label="Country"
                                     color='black'
                                     data={countryOptions}
+                                    value={inputs.country}
                                     onChange={(value) => setInputs({...inputs, country: value as string})}
                                 />
                                 <div className='px-2'></div>
@@ -175,6 +200,7 @@ export default function SignUp() {
                                     label="State/Province"
                                     color='black'
                                     data={provinceStateOptions}
+                                    value={inputs.stateProvince}
                                     onChange={(value) => setInputs({...inputs, stateProvince: value as string})}
                                 />
                             </div>
@@ -182,12 +208,14 @@ export default function SignUp() {
                                 placeholder="123 Main St"
                                 label="Street Address"
                                 color='black'
+                                value={inputs.streetAdress}
                                 onChange={(event) => setInputs({...inputs, streetAdress: event.currentTarget.value})}
                             />
                             <TextInput 
                                 placeholder="A4B 5C6"
                                 label="ZIP Code"
                                 color='black'
+                                value={inputs.zipCode}
                                 onChange={(event) => setInputs({...inputs, zipCode: event.currentTarget.value})}
                             />
                         </div>

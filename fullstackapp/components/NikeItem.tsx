@@ -4,7 +4,7 @@ import { FaEthereum } from 'react-icons/fa'
 
 export default function NikeItem() {
   return (
-    <div className='bg-white rounded-md w-60 flex flex-col align-middle p-4 m-4 -z-1'>
+    <div className='bg-white rounded-md w-64 flex flex-col align-middle p-4 m-4 -z-1 border-2 border-slate-200'>
         <div>
             <img 
                 src='https://images.stockx.com/images/Nike-Dunk-Low-Retro-White-Black-2021-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1633027409'
