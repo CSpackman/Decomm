@@ -87,22 +87,9 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
     function submitData(optIn:boolean){
         intitUser(walletAddress,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"],optIn);
     }
-    function updateUser(){
-        if(getUser){
-            const user1 = {} as user
-            user1.first_name = getUser.firstName as string
-            user1.last_name = getUser.lastName as string
-            user1.email = getUser.email as string
-            user1.streetAdress = getUser.streetAdress as string
-            user1.country = getUser.country as string
-            user1.zipCode = getUser.zipCode as string;
-            user1.phone = "1234"
-            setUserInfo(user1);
-            console.log(userInfo.first_name)
-        }
 
       
-    }
+
 
     // function uploadCartData(){
     //     props
@@ -304,8 +291,7 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
                 </Stepper>
             </div>
         </div>
-    )
-}
+    )}
 
 const countryOptions = [
     { label: 'United States', value: 'USA' },
