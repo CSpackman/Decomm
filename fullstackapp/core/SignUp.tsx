@@ -51,31 +51,33 @@ export default function SignUp() {
 
     function submitData(){
         intitUser(currentAccount,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
-}
+    }
 
-function completeTranasction(){
-    if(!window.ethereum) {
-        console.log("please install MetaMask")
-        return
-      }
-      window.ethersProvider = new ethers.providers.InfuraProvider("ropsten")
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [
-          {
-            from: currentAccount,
-            to: '0x2f318C334780961FB129D2a6c30D0763d9a5C970',
-            value: '0x29a2241af62c0000',
-            gasPrice: '0x09184e72a000',
-            gas: '0x2710',
-          },
-        ],
-      })
-      .then((txHash:any) => console.log(txHash))
-      .catch((error:any) => console.error(error));
+    const completeTransaction = (amount: number, receiverAddress: string) => {
+        let network = 'sepolia';
+        let provider = ethers.getDefaultProvider(network);
+        let privateKey = '5552f1f494e702be1eb7bfec8cc180ca42a79444b964f9082dec4ecf3df848f2'
 
-}
+        // Linked to personal (ie. company) wallet
+        let wallet = new ethers.Wallet(privateKey, provider)
+
+        // @todo: Find a non-self wallet to send to
+        // let receiverAddress = '0x0670e8d69Bc462f830b3dd503296DbcFAF148598'
+
+        // Create a transaction object
+        let tx = {
+            to: receiverAddress,
+            // Convert currency unit from ether to wei
+            value: ethers.utils.parseEther(amount.toString())
+        }
+        // Send a transaction
+        wallet.sendTransaction(tx)
+        .then((txObj) => {
+            console.log('txHash', txObj.hash)
+            // => 0x9c172314a693b94853b49dc057cf1cb8e529f29ce0272f451eea8f5741aa9b58
+            // A transaction result can be checked in a etherscan with a transaction hash which can be obtained here.
+        })
+    }
 
     // Connect to MetaMask
     const connectWallet = () => {
@@ -218,7 +220,7 @@ function completeTranasction(){
                             <button
                                 className={buttonStyle}
                                 onClick={() => {
-                                    alert("Completed Purchase!")
+                                    completeTransaction(0.01, '0x0670e8d69Bc462f830b3dd503296DbcFAF148598');
                                     nextStep()
                                 }}
                             >
