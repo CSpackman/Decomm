@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import React from 'react'
+import { FaEthereum } from 'react-icons/fa'
 
 export default function Summary() {
 
     return (
         <div className='bg-white rounded-md w-80 h-72 flex flex-col align-middle p-7'>
-
+            
         <div>
             <p className='font-semibold text-base' >Summary</p>
             <div className='py-2'></div>
@@ -33,11 +34,17 @@ export default function Summary() {
                     alt='Question mark in Transaction Summary' 
                     className='-ml-36'
                 />
-                <p className='text-xs'>$1,000.00</p>
+                <div className='flex items-center mt-2'>
+                    <FaEthereum className='text-black-500 mr-2' size={15} />
+                    <p className='font-bold text-sm'>{0.09} ETH</p>
+                </div>
             </div>
             <div className='py-1'></div>
         
-            <p className='float-right text-xs'>$7.00</p>
+            <div className='flex items-center mt-2'>
+                    <FaEthereum className='text-black-500 mr-2' size={15} />
+                    <p className='font-bold text-xs float-right'>{0.09} ETH</p>
+            </div>
             <p className='text-xs'>Estimated Shipping and Handling</p>
             <div className='py-1'></div>
 

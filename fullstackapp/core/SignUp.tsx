@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { ethers } from 'ethers'
 import { ExternalProvider } from "@ethersproject/providers";
-import { Stepper, Button, Group, TextInput, Select } from '@mantine/core';
+import { Stepper, Button, Group, TextInput, Select, Checkbox } from '@mantine/core';
 import initUser from '../convex/user';
 import { useQuery } from "../convex/_generated/react";
 import { useMutation } from "../convex/_generated/react";
+import { FaEthereum } from 'react-icons/fa'
+import complete from '../assets/complete.svg'
+import Image from 'next/image';
 
 declare global {
   interface Window {
@@ -12,7 +15,7 @@ declare global {
   }
 }
 
-const buttonStyle = 'bg-black text-white font-bold p-2 rounded-xl w-5/6'
+const buttonStyle = 'bg-black text-white font-bold p-4 rounded-xl w-full align-middle flex items-center justify-center mb-4';
 
 export default function SignUp() {
     const [currentAccount, setCurrentAccount] = useState('');
@@ -69,7 +72,7 @@ export default function SignUp() {
     }
 
     // Check if address is verified
-    useMemo(() => {
+    const checkAddress = () => {
         if (currentAccount != '') {
             if (ethers.utils.isAddress(currentAccount)) {
                 nextStep();
@@ -77,7 +80,7 @@ export default function SignUp() {
                 alert("Please connect with a valid Ethereum address.")
             }
         }
-    }, [currentAccount]);
+    }
 
     // Make color a prop so it's dynamic
     return (
@@ -90,6 +93,7 @@ export default function SignUp() {
                                 className={buttonStyle}
                                 onClick={() => {
                                     connectWallet()
+                                    checkAddress()
                                 }}
                             >
                                 Sign In with Metamask
@@ -169,9 +173,45 @@ export default function SignUp() {
                         </div>
                     </Stepper.Step>
                     <Stepper.Step label="Rewards?">
+                        <div className='mx-10 flex justify-center flex-col align-middle py-2'>
+                            Would you like to opt into rewards program? We compensate you for your data, and save you money.
+                            You can get back between 2-6% of your purchase price in rewards.
+                            <div className='flex w-full justify-center '>
+                                <div className='p-4'>
+                                    <Checkbox size='lg' label='Opt In' color='dark'/>
+                                </div>
+                                <div className='p-4'>
+                                    <Checkbox size='lg' label='Opt Out' color='dark'/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex justify-center w-full'>
+                            <button
+                                className={buttonStyle}
+                                onClick={() => {
+                                    alert("Completed Purchase!")
+                                    nextStep()
+                                }}
+                            >
+                                <div className='flex items-center mt-2 text-lg'>
+                                    <p className='mr-2'>Complete Purchase:</p>
+                                    <FaEthereum className='text-black-500 mr-1' size={15} />
+                                    <p className='font-bold'>{0.09} ETH</p>
+                                </div>
+                            </button>
+                        </div>
                     </Stepper.Step>
                     <Stepper.Completed>
-                        Shipping!
+                        <div className='w-full h-full flex justify-center p-4 flex-col align-middle items-center'>
+                            <Image 
+                                src={complete}
+                                alt="Completed"
+                                className='w-1/2 mx-auto'
+                                width={150}
+                                height={150}
+                            />
+                            <div className='font-bold p-2 text-lg text-black mt-2'>Purchase Completed</div>
+                        </div>
                     </Stepper.Completed>
                 </Stepper>
             </div>

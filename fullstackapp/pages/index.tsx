@@ -11,7 +11,7 @@ export default function App() {
   const [newMessageText, setNewMessageText] = useState('')
   const initUser = useMutation('user:initUser')
 
-  function setCookie(wallet, firstName, lastName, shippingAddress, history, email) {
+  function setCookie(wallet: string, firstName: string,  lastName: string, shippingAddress: string, history: string, email: string) {
     document.cookie = "wallet=" + wallet;
 
     if (firstName) {
@@ -33,7 +33,7 @@ export default function App() {
     console.log("document.cookie = " + document.cookie);
 }
   
-  function getCookie(cname) {
+  function getCookie(cname: string) {
     let name = cname + "=";
     let ca = document.cookie.split(';');
     for(let i = 0; i < ca.length; i++) {
@@ -93,8 +93,6 @@ export default function App() {
   )
 }
 
-
-// @todo: Add API call
 const sampleProps: NikeBagItemProps[] = [
   {
     img: 'https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/8061baec-449e-433b-89b3-8234dde499bd/air-jordan-1-mid-mens-shoes-FGLltd.png',
