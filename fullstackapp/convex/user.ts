@@ -1,7 +1,7 @@
 import { mutation, query } from './_generated/server'
-import { Query } from 'convex/server'
 
 export const initUser = mutation(async ({ db }, wallet: string, firstName?: string, lastName?: string, email?:string, streetAdress?: string, stateProvince?:string,country?:string, zipCode?:string, phone?:string, history?: Array<string>) => {
+  console.log(db);
   const user = {wallet, firstName, lastName, email,streetAdress,stateProvince,country,zipCode,phone,history}
   // const userId = await db.insert('users', user);
 })
