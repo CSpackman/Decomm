@@ -11,6 +11,17 @@ export default defineSchema({
     zipCode:s.optional(s.string()),
     history:  s.optional(s.array(s.string())),
     email: s.optional(s.string()),
+  }),
+  checkouts: defineTable({
+    merchantAddress: s.optional(s.string()),
+    TotalCartValue:  s.optional(s.string()),
+    Items: s.optional(s.array(s.any())),
+  }),
+  Items: defineTable({
+    ImgUrl: s.optional(s.string()),
+    Price: s.optional(s.number()),
+    Quanity: s.optional(s.number()),
+    Title: s.optional(s.string())
   })
 }
 //, {strict: false}

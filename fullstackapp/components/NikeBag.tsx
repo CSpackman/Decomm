@@ -6,19 +6,37 @@ import SignUp from '../core/SignUp';
 import OneClick from '../core/OneClick';
 import Decomm from '../core/Decomm';
 
+import { useCookies } from 'react-cookie';
+import {Cookies } from 'react-cookie'
 type NikeBagProps = {
     NikeItems: NikeBagItemProps[];
     bagOpened: boolean;
     setBagOpened: (value: boolean) => void;
+}
+export type ItemsData = {
+    ImgUrl: string,
+    Quantity: number,
+    Price: number,
+    Title: string
+}
+export type CheckoutObject = {
+    Items: Array<ItemsData>,
+    TotalCartValue: number,
+    MerchantAddress: String
 }
 
 export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagProps) {
 
     // Line 1: Declare a new state variable, to know whether the modal is open or not
     const [opened, setOpened] = useState(false);
-
+    const cookies = new Cookies();
+    const [currentCheckoutObject, setCheckoutObject] = useState(cookies.get('cart') as CheckoutObject);
     // @todo: Request from API with metamask ID to see if user needs to sign up
     const [hasAccount, setHasAccount] = useState(true);
+
+   
+
+   
 
   return (
     <div className='bg-white w-96 p-4 border-slate-400 border-2 rounded-lg z-10 absolute right-0'>
@@ -43,6 +61,8 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
             <button
                 onClick={() => {
                     setOpened(true)
+                    setCheckoutObject(cookies.get("cart"))
+                    console.log(currentCheckoutObject)
                     // setBagOpened(false)
                 }}
             >

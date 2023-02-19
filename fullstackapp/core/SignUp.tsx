@@ -8,6 +8,7 @@ import { useMutation } from "../convex/_generated/react";
 import { FaEthereum } from 'react-icons/fa'
 import complete from '../assets/complete.svg'
 import Image from 'next/image';
+import { CheckoutObject } from '../components/NikeBag';
 import { DecommChildProps } from './Decomm';
 
 declare global {
@@ -76,8 +77,12 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
     })})
 
     function submitData(){
-        intitUser(walletAddress,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
-    }
+        intitUser(account,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
+}
+
+    // function uploadCartData(){
+    //     props
+    // }
 
     // Connect to MetaMask
     const connectWallet = () => {

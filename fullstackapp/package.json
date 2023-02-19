@@ -14,8 +14,10 @@
     "@metamask/providers": "^10.2.1",
     "convex": "^0.9.1",
     "ethers": "^5.7.2",
+    "js-cookie": "^3.0.1",
     "next": "latest",
     "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "wagmi": "^0.11.5"
