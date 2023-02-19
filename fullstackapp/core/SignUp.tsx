@@ -45,7 +45,7 @@ export const completeTransaction = (amount: number, receiverAddress: string) => 
 }
 
 export default function SignUp({ walletAddress, account, setCurrentWallet }: DecommChildProps) {
-    const [active, setActive] = useState(1);
+    const [active, setActive] = useState(0);
     const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
     const [inputs, setInputs] = useState({} as user);

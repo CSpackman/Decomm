@@ -8,9 +8,8 @@ import Image from 'next/image';
 import { DecommChildProps } from './Decomm'
 
 export default function OneClick({ walletAddress, account, setCurrentWallet }: DecommChildProps) {
-    const [active, setActive] = useState(1);
-    const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-    const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+    const [active, setActive] = useState(0);
+    const nextStep = () => setActive((current) => (current < 2 ? current + 1 : current));
   
   // @todo: This should do math
   return (
@@ -24,7 +23,7 @@ export default function OneClick({ walletAddress, account, setCurrentWallet }: D
         <div className='flex w-full mt-2 text-md align-bottom items-center justify-between ml-auto'>
           <p>Do you have a promo code?</p>
           <div className='ml-auto w-40'>
-            <Input />
+            <Input placeholder='Promo'/>
           </div>
         </div>
         <div className='mt-4 flex align-middle items-center justify-between'>

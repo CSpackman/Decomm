@@ -49,7 +49,7 @@ export default function Decomm({ opened, setOpened }: DecommProps) {
             withCloseButton={false}
             size='60%'
         >
-            { account != {} as User ? 
+            { account === {} as User ? 
                 <OneClick walletAddress={currentWallet} setCurrentWallet={setCurrentWallet} account={account} /> : 
                 <SignUp walletAddress={currentWallet} setCurrentWallet={setCurrentWallet} account={account} /> 
             }
