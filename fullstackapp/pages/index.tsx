@@ -95,14 +95,44 @@ export default function App() {
           Men's Lifestyle Shoes (400+)
         </div>
           <div className='flex items-center justify-center align-middle -z-10'>
-            <NikeItem />
-            <NikeItem />
-            <NikeItem />
+            <NikeItem 
+              image='https://images.stockx.com/images/Nike-Dunk-Low-Retro-White-Black-2021-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1633027409'
+              title='Nike Dunk Low Retro White Black'
+              ethPrice={0.09}
+              size={13}
+            />
+            <NikeItem 
+              image='https://images.stockx.com/images/Nike-Dunk-Low-Retro-White-Black-2021-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1633027409'
+              title='Nike Dunk Low Retro White Black'
+              ethPrice={0.09}
+              size={13}
+            />
+            <NikeItem 
+              image='https://images.stockx.com/images/Nike-Dunk-Low-Retro-White-Black-2021-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1633027409'
+              title='Nike Dunk Low Retro White Black'
+              ethPrice={0.09}
+              size={13}
+            />
           </div>
           <div className='flex items-center justify-center align-middle -z-10'>
-            <NikeItem />
-            <NikeItem />
-            <NikeItem />
+            <NikeItem 
+              image='https://images.stockx.com/images/Nike-Dunk-Low-Retro-White-Black-2021-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1633027409'
+              title='Nike Dunk Low Retro White Black'
+              ethPrice={0.09}
+              size={13}
+            />
+            <NikeItem 
+              image='https://images.stockx.com/images/Nike-Dunk-Low-Retro-White-Black-2021-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1633027409'
+              title='Nike Dunk Low Retro White Black'
+              ethPrice={0.09}
+              size={13}
+            />
+            <NikeItem 
+              image='https://images.stockx.com/images/Nike-Dunk-Low-Retro-White-Black-2021-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1633027409'
+              title='Nike Dunk Low Retro White Black'
+              ethPrice={0.09}
+              size={13}
+            />
           </div>
       </div>
     </main>
