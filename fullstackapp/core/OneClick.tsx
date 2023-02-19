@@ -3,7 +3,7 @@ import Summary from '../components/Summary'
 import { Checkbox, Input, Stepper } from '@mantine/core'
 import { FaEthereum } from 'react-icons/fa'
 import { completeTransaction } from './SignUp'
-import complete from '../assets/complete.svg'
+import complete from '../public/assets/complete.svg'
 import Image from 'next/image';
 import { DecommChildProps } from './Decomm'
 import { CheckoutObject } from '../components/NikeBag'

@@ -5,7 +5,7 @@ import { Stepper, Button, Group, TextInput, Select, Checkbox } from '@mantine/co
 import { useQuery } from "../convex/_generated/react";
 import { useMutation } from "../convex/_generated/react";
 import { FaEthereum } from 'react-icons/fa'
-import complete from '../assets/complete.svg'
+import complete from '../public/assets/complete.svg'
 import Image from 'next/image';
 import { CheckoutObject } from '../components/NikeBag';
 import { DecommChildProps } from './Decomm';
