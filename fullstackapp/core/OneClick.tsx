@@ -58,7 +58,10 @@ export default function OneClick({ walletAddress, account, setCurrentWallet }: D
       return calcualteTaxes()+calculateShipping()+getSubtotal()-calcualteRewards();
     }
     function sumbitCheckoutData(){
-      CheckoutDataBackend(currentCheckoutObject.MerchantAddress as string,currentCheckoutObject.TotalCartValue,currentCheckoutObject.Items, userQuery?._id)
+      var data: any = 0;
+      if( userQuery?._id != null) data = userQuery?._id
+    
+      CheckoutDataBackend(currentCheckoutObject.MerchantAddress as string,currentCheckoutObject.TotalCartValue,currentCheckoutObject.Items, data )
     }
 
   // @todo: This should do math
