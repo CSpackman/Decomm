@@ -77,7 +77,7 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
     })})
 
     function submitData(){
-        intitUser(account,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
+        intitUser(walletAddress,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
 }
 
     // function uploadCartData(){
