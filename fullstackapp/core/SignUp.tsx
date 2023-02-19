@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { ethers } from 'ethers'
 import { ExternalProvider } from "@ethersproject/providers";
 import { Stepper, Button, Group, TextInput, Select } from '@mantine/core';
-import initUser from '../convex/user';
 import { useQuery } from "../convex/_generated/react";
 import { useMutation } from "../convex/_generated/react";
 
@@ -29,9 +28,11 @@ export default function SignUp() {
         stateProvince: string,
         country: string,
         zipCode: string,
-        phone: string
+        phone: string,
 
     }
+    const intitUser = useMutation("user:initUser");
+
     function submitData(){
         if(!window.ethereum) {
             console.log("please install MetaMask")
@@ -41,7 +42,10 @@ export default function SignUp() {
         provider.send("eth_requestAccounts", [])
         .then((accounts)=>{
           if(accounts.length>0) setCurrentAccount(accounts[0])
-          initUser(accounts[0],inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone)
+          
+          intitUser(accounts[0],inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
+        //   initUser(accounts[0],inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone)
+
     })
 }
 
