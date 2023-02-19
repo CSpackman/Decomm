@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { ethers } from 'ethers'
+import { ethers, providers } from 'ethers'
 import { ExternalProvider } from "@ethersproject/providers";
 import { Stepper, Button, Group, TextInput, Select } from '@mantine/core';
 import { useQuery } from "../convex/_generated/react";
@@ -33,20 +33,44 @@ export default function SignUp() {
     }
     const intitUser = useMutation("user:initUser");
 
-    function submitData(){
+    useEffect(()=>{
         if(!window.ethereum) {
             console.log("please install MetaMask")
             return
           }
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        provider.send("eth_requestAccounts", [])
-        .then((accounts)=>{
-          if(accounts.length>0) setCurrentAccount(accounts[0])
-          
-          intitUser(accounts[0],inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
-        //   initUser(accounts[0],inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone)
+          const provider = new ethers.providers.Web3Provider(window.ethereum)
+          provider.send("eth_requestAccounts", [])
+          .then((accounts)=>{
+            
+            if(accounts.length>0) setCurrentAccount(accounts[0])
+    })})
 
-    })
+    function submitData(){
+        intitUser(currentAccount,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
+}
+
+function completeTranasction(){
+    if(!window.ethereum) {
+        console.log("please install MetaMask")
+        return
+      }
+      window.ethersProvider = new ethers.providers.InfuraProvider("ropsten")
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: currentAccount,
+            to: '0x2f318C334780961FB129D2a6c30D0763d9a5C970',
+            value: '0x29a2241af62c0000',
+            gasPrice: '0x09184e72a000',
+            gas: '0x2710',
+          },
+        ],
+      })
+      .then((txHash:any) => console.log(txHash))
+      .catch((error:any) => console.error(error));
+
 }
 
     // Connect to MetaMask
