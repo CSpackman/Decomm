@@ -6,11 +6,61 @@ import { completeTransaction } from './SignUp'
 import complete from '../assets/complete.svg'
 import Image from 'next/image';
 import { DecommChildProps } from './Decomm'
+import { CheckoutObject } from '../components/NikeBag'
+import { useMutation, useQuery } from '../convex/_generated/react'
+
+
+import {Cookies} from 'react-cookie'
 
 export default function OneClick({ walletAddress, account, setCurrentWallet }: DecommChildProps) {
     const [active, setActive] = useState(0);
+    const [OneClickAccount, setOneClickAccount] = useState(account)
+    const userQuery = useQuery("user:getFromWallet",walletAddress)
     const nextStep = () => setActive((current) => (current < 2 ? current + 1 : current));
-  
+    const cookies = new Cookies();
+    const [currentCheckoutObject, setCheckoutObject] = useState(cookies.get('cart') as CheckoutObject);
+    const CheckoutDataBackend = useMutation("cartData:createCartInstance")
+    function getSubtotal(){
+      return currentCheckoutObject.TotalCartValue
+    }
+    function calculateShipping(){
+      switch(userQuery?.country) {
+        case "United States":
+            return .01;
+          break;
+        case "Canada":
+          return .02;
+          break;
+        default:
+          return .03;
+      }
+    }
+
+    function calcualteTaxes(){
+      switch(userQuery?.country) {
+        case "United States":
+            return .01;
+          break;
+        case "Canada":
+          return .02;
+          break;
+        default:
+          return .03;
+      }
+    }
+    function calcualteRewards(){
+      if (userQuery?.optIn == true){
+        return .002
+      }
+      return 0
+    }
+    function calcualteTotal(){
+      return calcualteTaxes()+calculateShipping()+getSubtotal()-calcualteRewards();
+    }
+    function sumbitCheckoutData(){
+      CheckoutDataBackend(currentCheckoutObject.MerchantAddress as string,currentCheckoutObject.TotalCartValue,currentCheckoutObject.Items, userQuery?._id)
+    }
+
   // @todo: This should do math
   return (
     <div>
@@ -30,7 +80,7 @@ export default function OneClick({ walletAddress, account, setCurrentWallet }: D
           <p>Subtotal</p>
           <div className='flex items-center ml-auto mr-10 justify-end'>
               <FaEthereum className='text-black-500 mr-2' size={15} />
-              <p className='font-bold text-lg'>{0.09} ETH</p>
+              <p className='font-bold text-lg'>{getSubtotal()} ETH</p>
           </div>
         </div>
         <div className='mt-4 flex align-middle items-center justify-between'>
@@ -38,7 +88,7 @@ export default function OneClick({ walletAddress, account, setCurrentWallet }: D
           <div className='flex items-center ml-auto mr-10'>
               <FaEthereum className='text-black-500 mr-2' size={15} />
               {/* @todo: This should be passed in from cookie */}
-              <p className='font-bold text-md'>{0.0001} ETH</p>
+              <p className='font-bold text-md'>{calculateShipping()} ETH</p>
           </div>
         </div>
         <div className='mt-4 flex align-middle items-center justify-between'>
@@ -46,7 +96,7 @@ export default function OneClick({ walletAddress, account, setCurrentWallet }: D
           <div className='flex items-center ml-auto mr-10'>
               <FaEthereum className='text-black-500 mr-2' size={15} />
               {/* @todo: This should be passed in from cookie */}
-              <p className='font-bold text-md'>-</p>
+              <p className='font-bold text-md'>{calcualteTaxes()}</p>
           </div>
         </div>
         <div className='mt-4 flex align-middle items-center justify-between'>
@@ -54,7 +104,7 @@ export default function OneClick({ walletAddress, account, setCurrentWallet }: D
           <div className='flex items-center ml-auto mr-10'>
               <FaEthereum className='text-green-500 mr-2' size={15} />
               {/* @todo: This should be passed in from cookie */}
-              <p className='font-bold text-md text-green-500'>0.02 ETH</p>
+              <p className='font-bold text-md text-green-500'>{calcualteRewards() + " ETH" }</p>
           </div>
         </div>
         <div className='border-slate-500 w-full border-2 mt-2'></div>
@@ -63,7 +113,7 @@ export default function OneClick({ walletAddress, account, setCurrentWallet }: D
           <div className='flex items-center ml-auto mr-10'>
               <FaEthereum className='text-black-500 mr-2' size={15} />
               {/* @todo: This should be passed in from cookie */}
-              <p className='font-bold text-lg'>0.0701 ETH</p>
+              <p className='font-bold text-lg'>{calcualteTotal()+" ETH"}</p>
           </div>
         </div>
         <div>
@@ -74,6 +124,7 @@ export default function OneClick({ walletAddress, account, setCurrentWallet }: D
                 return
               }
               completeTransaction(0.01, '0x0670e8d69Bc462f830b3dd503296DbcFAF148598')
+              sumbitCheckoutData()
               nextStep()
             }}
           >

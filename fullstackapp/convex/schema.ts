@@ -11,10 +11,12 @@ export default defineSchema({
     zipCode:s.optional(s.string()),
     history:  s.optional(s.array(s.string())),
     email: s.optional(s.string()),
+    optIn: s.optional(s.boolean()),
   }),
   checkouts: defineTable({
     merchantAddress: s.optional(s.string()),
-    TotalCartValue:  s.optional(s.string()),
+    userAddress: s.optional(s.string()),
+    TotalCartValue:  s.optional(s.number()),
     Items: s.optional(s.array(s.any())),
   }),
   Items: defineTable({

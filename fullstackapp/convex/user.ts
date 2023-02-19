@@ -1,7 +1,7 @@
 import { mutation, query } from './_generated/server'
 
-export const initUser = mutation(async ({ db }, wallet: string, firstName?: string, lastName?: string, email?:string, streetAdress?: string, stateProvince?:string,country?:string, zipCode?:string, phone?:string, history?: Array<string>) => {
-  const user = {wallet, firstName, lastName, email,streetAdress,stateProvince,country,zipCode,phone,history}
+export const initUser = mutation(async ({ db }, wallet: string, firstName?: string, lastName?: string, email?:string, streetAdress?: string, stateProvince?:string,country?:string, zipCode?:string, phone?:string, history?: Array<string>, optIn?:boolean) => {
+  const user = {wallet, firstName, lastName, email,streetAdress,stateProvince,country,zipCode,phone,history,optIn}
   const userId = await db.insert('users', user);
 })
 
@@ -38,6 +38,7 @@ export const editUser = mutation(async ({ db }, wallet: string,  firstName?: str
     }
   }
 )
+
 
 
 export default initUser;

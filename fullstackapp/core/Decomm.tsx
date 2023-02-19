@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import OneClick from './OneClick';
 import SignUp from './SignUp';
 import { Modal } from '@mantine/core';
+import { useQuery } from '../convex/_generated/react';
+import { Wallet } from 'ethers';
 
 /*
 * Core Package for Decomm
@@ -17,6 +19,7 @@ type User = {
     country: string,
     zipCode: string,
     phone: string,
+    optIn: boolean
 
 }
 
@@ -34,12 +37,28 @@ type DecommProps = {
 export default function Decomm({ opened, setOpened }: DecommProps) {
     const [account, setAccount] = useState({} as User);
     const [currentWallet, setCurrentWallet] = useState('');
+    const userQuery = useQuery("user:getFromWallet",currentWallet)
 
     // Immediately check if user has an account
     useEffect(() => {
+        const currentUserData = {
+            first_name:userQuery?.firstName,
+            last_name: userQuery?.lastName,
+            email: userQuery?.email,
+            streetAdress: userQuery?.streetAdress,
+            stateProvince: userQuery?.stateProvince,
+            country: userQuery?.country,
+            zipCode: userQuery?.zipCode,
+            optIn: userQuery?.optIn
+        }
         // @todo: Add API call
-        setAccount({} as User);
+        setAccount(currentUserData as User);
     }, []);
+
+    function checkUser(){
+        if(userQuery?.wallet!= null) return true;
+        return false;
+    }
 
   return (
     <div>
@@ -49,7 +68,7 @@ export default function Decomm({ opened, setOpened }: DecommProps) {
             withCloseButton={false}
             size='60%'
         >
-            { account === {} as User ? 
+            { checkUser() == true  ? 
                 <OneClick walletAddress={currentWallet} setCurrentWallet={setCurrentWallet} account={account} /> : 
                 <SignUp walletAddress={currentWallet} setCurrentWallet={setCurrentWallet} account={account} /> 
             }

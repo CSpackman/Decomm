@@ -6,7 +6,7 @@ export type NikeBagItemProps = {
     itemName: string;
     itemType: string;
     itemSize: string;
-    ethPrice: string;
+    ethPrice: number;
 }
 
 export default function NikeBagItem({ img, itemName, itemSize, itemType, ethPrice }: NikeBagItemProps) {

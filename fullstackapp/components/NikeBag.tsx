@@ -5,11 +5,12 @@ import { Popover, Modal, Button } from '@mantine/core';
 import SignUp from '../core/SignUp';
 import OneClick from '../core/OneClick';
 import Decomm from '../core/Decomm';
+import {RxCrossCircled} from 'react-icons/rx'
 
 import { useCookies } from 'react-cookie';
 import {Cookies } from 'react-cookie'
 type NikeBagProps = {
-    NikeItems: NikeBagItemProps[];
+    // NikeItems: NikeBagItemProps[];
     bagOpened: boolean;
     setBagOpened: (value: boolean) => void;
 }
@@ -25,7 +26,7 @@ export type CheckoutObject = {
     MerchantAddress: String
 }
 
-export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagProps) {
+export default function NikeBag({ bagOpened, setBagOpened }: NikeBagProps) {
 
     // Line 1: Declare a new state variable, to know whether the modal is open or not
     const [opened, setOpened] = useState(false);
@@ -33,11 +34,25 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
     const [currentCheckoutObject, setCheckoutObject] = useState(cookies.get('cart') as CheckoutObject);
     // @todo: Request from API with metamask ID to see if user needs to sign up
     const [hasAccount, setHasAccount] = useState(true);
+    try{
+
+    var NikeItems: NikeBagItemProps[] =[];
+    for( var i=0; i<currentCheckoutObject.Items.length; i++){
+      var itemToBeAdded = {
+        img: currentCheckoutObject.Items[i].ImgUrl,
+        itemName: currentCheckoutObject.Items[i].Title,
+        itemType: 'Mens Shoe',
+        itemSize: 'Size: 13',
+        ethPrice: currentCheckoutObject.Items[i].Price
+      }
+      NikeItems.push(itemToBeAdded)
+    }
+}catch{
+    var NikeItems: NikeBagItemProps[] =[];
+}
 
    
-
-   
-
+if(NikeItems.length!=0){
   return (
     <div className='bg-white w-96 p-4 border-slate-400 border-2 rounded-lg z-10 absolute right-0'>
         <div className='flex align-top items-center'>
@@ -75,4 +90,14 @@ export default function NikeBag({ NikeItems, bagOpened, setBagOpened }: NikeBagP
         </div>
     </div>
   )
+}else{
+    return(
+        <div className='bg-white w-96 p-4 border-slate-400 border-2 rounded-lg z-10 absolute right-0'>
+        <div className='flex align-top items-center'>
+            <RxCrossCircled className='text-red-500' size={20} />
+            <p className='text-lg font-bold px-3'>Your Cart is Empty!</p>
+        </div>
+    </div>
+  )
+}
 }

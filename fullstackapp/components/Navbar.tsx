@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { BsBag } from 'react-icons/bs'
 import { Indicator } from '@mantine/core';
-
+import {Cookies} from 'react-cookie'
+import { CheckoutObject } from './NikeBag';
 const navElement = 'text-gray-500 hover:text-black px-2'
 
 type NavbarProps = {
@@ -9,6 +10,7 @@ type NavbarProps = {
     bagOpened: boolean;
     setBagOpened: (value: boolean) => void;
 }
+
 
 export default function Navbar({ items, bagOpened, setBagOpened }: NavbarProps) {
   return (
@@ -33,7 +35,7 @@ export default function Navbar({ items, bagOpened, setBagOpened }: NavbarProps) 
             className='mr-5'
             onClick={() => setBagOpened(!bagOpened)}
         >
-            <Indicator label={items} inline size={18} color='black'>
+            <Indicator label={0} inline size={18} color='black'>
                 <BsBag className='' size={20} />
             </Indicator>
         </div>

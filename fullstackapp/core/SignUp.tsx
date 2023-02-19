@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { ethers, providers } from 'ethers'
 import { ExternalProvider } from "@ethersproject/providers";
 import { Stepper, Button, Group, TextInput, Select, Checkbox } from '@mantine/core';
-import initUser from '../convex/user';
 import { useQuery } from "../convex/_generated/react";
 import { useMutation } from "../convex/_generated/react";
 import { FaEthereum } from 'react-icons/fa'
@@ -10,6 +9,7 @@ import complete from '../assets/complete.svg'
 import Image from 'next/image';
 import { CheckoutObject } from '../components/NikeBag';
 import { DecommChildProps } from './Decomm';
+
 
 declare global {
   interface Window {
@@ -46,7 +46,14 @@ export const completeTransaction = (amount: number, receiverAddress: string) => 
 }
 
 export default function SignUp({ walletAddress, account, setCurrentWallet }: DecommChildProps) {
+    const getUser = useQuery("user:getFromWallet",walletAddress);
     const [active, setActive] = useState(0);
+    const [optIn, setOptIn] = useState(false);
+    // if(getUser){
+    //     const [userInfo, setUserInfo] = useState(getUser)
+    // }else{
+    //     const [userInfo, setUserInfo] = useState({} as user)
+    // }
     const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
     const [inputs, setInputs] = useState({} as user);
@@ -65,6 +72,7 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
     const intitUser = useMutation("user:initUser");
 
     useEffect(()=>{
+        console.log()
         if(!window.ethereum) {
             console.log("please install MetaMask")
             return
@@ -76,9 +84,25 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
             if(accounts.length>0) setCurrentWallet(accounts[0])
     })})
 
-    function submitData(){
-        intitUser(walletAddress,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"]);
-}
+    function submitData(optIn:boolean){
+        intitUser(walletAddress,inputs.first_name,inputs.last_name,inputs.email,inputs.streetAdress,inputs.stateProvince,inputs.country,inputs.zipCode,inputs.phone,["zero"],optIn);
+    }
+    function updateUser(){
+        if(getUser){
+            const user1 = {} as user
+            user1.first_name = getUser.firstName as string
+            user1.last_name = getUser.lastName as string
+            user1.email = getUser.email as string
+            user1.streetAdress = getUser.streetAdress as string
+            user1.country = getUser.country as string
+            user1.zipCode = getUser.zipCode as string;
+            user1.phone = "1234"
+            setUserInfo(user1);
+            console.log(userInfo.first_name)
+        }
+
+      
+    }
 
     // function uploadCartData(){
     //     props
@@ -229,7 +253,7 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
                                 className='text-white font-bold'
                                 onClick={() => {
                                     nextStep()
-                                    submitData()
+                                    // updateUser()
                                 }}
                             >
                                 Continue
@@ -242,10 +266,9 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
                             You can get back between 2-6% of your purchase price in rewards.
                             <div className='flex w-full justify-center '>
                                 <div className='p-4'>
-                                    <Checkbox size='lg' label='Opt In' color='dark'/>
-                                </div>
-                                <div className='p-4'>
-                                    <Checkbox size='lg' label='Opt Out' color='dark'/>
+                                    <Checkbox size='lg' label='Opt In' color='dark' onClick={()=>{
+                                        setOptIn(!optIn)
+                                    }}/>
                                 </div>
                             </div>
                         </div>
@@ -254,6 +277,7 @@ export default function SignUp({ walletAddress, account, setCurrentWallet }: Dec
                                 className={buttonStyle}
                                 onClick={() => {
                                     completeTransaction(0.01, '0x0670e8d69Bc462f830b3dd503296DbcFAF148598');
+                                    submitData(optIn)
                                     nextStep()
                                 }}
                             >
